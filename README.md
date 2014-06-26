@@ -6,9 +6,9 @@ Delegates to the best networking library on each platform, and gives you an esca
 
 ## Usage
 
-Motion::HTTP is built on moving around `Motion::HTTP::Request` objects.
-
 ### Building Requests
+
+Motion::HTTP is built on moving around `Motion::HTTP::Request` objects.
 
 ```ruby
 request = Motion::HTTP::Request.new
@@ -23,6 +23,11 @@ request.headers["Accept"] = "application/json"
 ```
 
 ### Running Requests
+
+Motion::HTTP uses reasonable defaults for running requests:
+
+- All requests are run asynchronously on non-UI threads
+- Responses return on the UI thread
 
 ```ruby
 Motion::HTTP.get/post/put/delete/head(request) do |response|
@@ -40,7 +45,7 @@ response.headers["Content-Type"]
 
 ### Clients
 
-If you want to share configuration/headers/etc for groups of requests, use `Motion::HTTP::Client`:
+If you want to share configuration/headers/etc for groups of requests, use `Motion::HTTP::Client`. Any configuration in a `Motion::HTTP::Request` instance will override the client's configuration:
 
 ```ruby
 client = Motion::HTTP::Client.new
